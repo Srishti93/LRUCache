@@ -3,29 +3,38 @@
 #include<iostream>
 #include<deque>
 #include<unordered_map>
+#include<list>
 
 using namespace std;
 
-template <typename T>
-class Cache
+template <typename T, typename K>
+class Cacheable
 {
-	T get();
-	put(const T& );	
+	K key;
+	T data;
 };
 
-template<typename T>
-class LRUCache: public Cache<T>
+template<typename T, typename K>
+class LRUCache
 {
+	typedef Cacheable<T, K> ItemType;
+	typedef deque<ItemType> Queue;
+
+	
 	private:
-		std::deque<T> queue;
-		std::unordered_map<T, T> map;
+		Queue queue;
+		unordered_map<K, Queue::iterator> map1;
+		//unordered_map<int, deque<int>::iterator> map;
 		
 	public:	
-	T get()
+	ItemType& get(K key)
 	{
-		
+		if(map.find(key) == map.end())
+		{
+			
+		}
 	}
-	put(const T& data)
+	put(const ItemType& item)
 	{
 		
 	}
@@ -34,5 +43,5 @@ class LRUCache: public Cache<T>
 
 int main()
 {
-	LRUCache<int> cache;
+	LRUCache<int, int> cache;
 }
