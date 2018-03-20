@@ -29,7 +29,7 @@ template<typename T, typename K>
 class LRUCache
 {
 	typedef Cacheable<T, K> ItemType;
-	typedef deque<ItemType> Queue;
+	typedef list<ItemType> Queue;
 	typedef typename Queue::iterator QueueIterator;
 	typedef unordered_map<K, QueueIterator> Map;
 	typedef typename Map::iterator MapIterator;
@@ -40,15 +40,26 @@ class LRUCache
 		//unordered_map<int, deque<int>::iterator> map;
 		
 	public:	
-	ItemType& get(K key)
+	ItemType* get(K key)
 	{
-
-	}
-	put(const ItemType& item)
-	{
-		MapIterator iter = map.find(item.key);
+		MapIterator iter = map.find(key);
 		if(iter == map.end())
 		{
+			return NULL;
+		}
+		else
+		{
+			queue.splice(queue.begin(), queue, iter->second);
+			iter->second = queue.begin();
+			return &(*(iter->second));
+		}
+	}
+	void put(const ItemType& item)
+	{
+		MapIterator iter = map.find(item.key);
+		if(iter != map.end())
+		{
+			return;
 		}
 		QueueIterator it = queue.begin();
 		it = queue.insert(it,item);
@@ -78,4 +89,6 @@ int main()
 	cache.put(c3);
 	
 	cache.printQueue();
+	
+	cache.get(1)->printData();
 }
