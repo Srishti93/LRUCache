@@ -19,11 +19,11 @@ class LRUCache
 {
 	typedef Cacheable<T, K> ItemType;
 	typedef deque<ItemType> Queue;
-
+	typedef typename Queue::iterator Pointer;
 	
 	private:
 		Queue queue;
-		unordered_map<K, Queue::iterator> map1;
+		unordered_map<K, Pointer> map;
 		//unordered_map<int, deque<int>::iterator> map;
 		
 	public:	
