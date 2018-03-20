@@ -37,9 +37,14 @@ class LRUCache
 	private:
 		Queue queue;
 		Map map;
+		int size;
 		//unordered_map<int, deque<int>::iterator> map;
 		
 	public:	
+	LRUCache(int size):size(size)
+	{
+		
+	}
 	ItemType* get(K key)
 	{
 		MapIterator iter = map.find(key);
@@ -61,9 +66,22 @@ class LRUCache
 		{
 			return;
 		}
+		
+		if(queue.size() == size)
+		{
+			evictLRU();
+		}
 		QueueIterator it = queue.begin();
 		it = queue.insert(it,item);
 		map.emplace(item.key, it);
+	}
+	
+	void evictLRU()
+	{
+		QueueIterator it = queue.end();
+		--it;
+		MapIterator iter = map.find(it->key);
+		
 	}
 	printQueue()
 	{
@@ -77,7 +95,7 @@ class LRUCache
 
 int main()
 {
-	LRUCache<int, int> cache;
+	LRUCache<int, int> cache(5);
 	
 	Cacheable<int,int> c(1,10);
 	Cacheable<int,int> c1(2,11);
