@@ -16,7 +16,7 @@ class Cacheable
 	
 	Cacheable( K k, T t):data(t),key(k) 
 	{
-		cout<<"key "<<key<<endl;
+		//cout<<"key "<<key<<endl;
 	}
 	
 	printData()
@@ -62,6 +62,7 @@ class LRUCache
 	void put(const ItemType& item)
 	{
 		MapIterator iter = map.find(item.key);
+		cout<<"inserting "<<item.key<<endl;
 		if(iter != map.end())
 		{
 			return;
@@ -106,9 +107,9 @@ int main()
 	cache.put(c);
 	cache.put(c1);
 	cache.put(c2);
+	cache.get(1);
+	cache.get(2);
 	cache.put(c3);
 	
 	cache.printQueue();
-	
-	//cache.get(1)->printData();
 }
