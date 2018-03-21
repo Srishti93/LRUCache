@@ -54,10 +54,15 @@ class LRUCache
 		}
 		else
 		{
-			queue.splice(queue.begin(), queue, iter->second);
-			iter->second = queue.begin();
+			promote(iter);
 			return &(*(iter->second));
 		}
+	}
+	
+	void promote(MapIterator iter)
+	{
+		queue.splice(queue.begin(), queue, iter->second);
+		iter->second = queue.begin();
 	}
 	void put(const ItemType& item)
 	{
@@ -110,6 +115,6 @@ int main()
 	cache.get(1);
 	cache.get(2);
 	cache.put(c3);
-	
+	cache.get(3);
 	cache.printQueue();
 }
