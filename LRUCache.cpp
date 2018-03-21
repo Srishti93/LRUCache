@@ -81,7 +81,9 @@ class LRUCache
 		QueueIterator it = queue.end();
 		--it;
 		MapIterator iter = map.find(it->key);
-		
+		cout<<"evicting "<<it->key<<endl;
+		queue.erase(it);
+		map.erase(iter);
 	}
 	printQueue()
 	{
@@ -95,7 +97,7 @@ class LRUCache
 
 int main()
 {
-	LRUCache<int, int> cache(5);
+	LRUCache<int, int> cache(3);
 	
 	Cacheable<int,int> c(1,10);
 	Cacheable<int,int> c1(2,11);
@@ -108,5 +110,5 @@ int main()
 	
 	cache.printQueue();
 	
-	cache.get(1)->printData();
+	//cache.get(1)->printData();
 }
